@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .main{
+      border: 1px solid black;
+      border-radius: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 50px;
+      background-color: black;
+      color: white;
+    }
+  </style>
+  <title>Relation-db</title>
+</head>
+<body>
+  <div class="main">
+    <h1>Register a student</h1>
+    <form class="form">
+      <label>Student ID</label><br>
+      <input type="number" class="id"><br>
+      <label>Student Name</label><br>
+      <input type="text" class="name"><br>
+      <button class="button">submit</button>
+    </form>
+
+    <p>Register a professor:<a href="prof.html">REGISTER</a></p>
+    <p>Register a course:<a href="course.html">REGISTER</a></p>
+
+  </div>
+
+  <script>
+    const id = document.querySelector('.id');
+    const name = document.querySelector('.name');
+    const form = document.querySelector('.form');
+    const button = document.querySelector('.button');
+
+    
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const student = {
+        id: id.value,
+        name: name.value,
+      };
+
+      fetch('http://localhost:5004/student', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body:JSON.stringify({data : student})
+      })
+      .then(response => response.json())
+      .then(data => console.log(data.message))
+      .catch(error => console.log(`There is an error on receiving response ${error}`));
+    })
+  </script>
+</body>
+</html>
